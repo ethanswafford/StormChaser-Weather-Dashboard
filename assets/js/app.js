@@ -1,4 +1,6 @@
 //temporary
+console.log('Script Connected');
+
 const apiKey = "12bbb864e1faecf33a4bc60505780bcf";
 const urlForecast = "https://api.openweathermap.org/data/2.5/weather";
 const getUrl = " https://api.openweathermap.org/data/2.5/forecast";
@@ -46,21 +48,19 @@ fetch(getUrl)
         const code = Number(data.cod);
 
         if (code !== 200) {
-            showMessage(
-                "Forecast request failed (" + data.cod + "): " + (data.message || ""),
-                "error"
-            );
+            showMessage("Request failed (" + data.cod + "): " + (data.message || ""),
+                "error");
             return;
         }
 
         showMessage(
-            "Showing a few upcoming forecast entries for " + data.city.name + ".",
+            "Showing current weather information for " + data.city.name + ".",
             "info"
         );
 
         renderForecastCards(data);
     })
     .catch(function (error) {
-        console.error("Error fetching forecast:", error);
-        showMessage("Something went wrong fetching the forecast.", "error");
+        console.error("Error fetching weather information:", error);
+        showMessage("Something went wrong fetching the requested information.", "error");
     });
