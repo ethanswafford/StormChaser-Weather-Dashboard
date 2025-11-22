@@ -34,3 +34,33 @@ function showMessage(text, type) {
         messageEl.classList.add("text-info");
     }
 }
+
+fetch(getUrl)
+    .then(function (res) {
+        console.log('Response: ', res);
+        return res.json();
+    })
+    .then(function (data) {
+        console.log('Data: ', data);
+
+        const code = Number(data.cod);
+
+        if (code !== 200) {
+            showMessage(
+                "Forecast request failed (" + data.cod + "): " + (data.message || ""),
+                "error"
+            );
+            return;
+        }
+
+        showMessage(
+            "Showing a few upcoming forecast entries for " + data.city.name + ".",
+            "info"
+        );
+
+        renderForecastCards(data);
+    })
+    .catch(function (error) {
+        console.error("Error fetching forecast:", error);
+        showMessage("Something went wrong fetching the forecast.", "error");
+    });
